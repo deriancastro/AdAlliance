@@ -15,22 +15,9 @@ app.use(express.urlencoded({
     extended: true
 }));
 
-app.get('/test', (req, res) => {
-    let sql = `SELECT * FROM table1`;
-
-    database.query(sql, (err, result) => {
-        if(err) {
-            res.status(400).send(err);
-            return;
-        }
-
-        if(result.length) {
-            res.json(result);
-        }else {
-            res.json({});
-        };
-    });
-});
+app.use('/', [
+    require('./routes/ads'),
+]);
 
 app.listen(port, () => {
     console.log(`listening at http://localhost:${port}`)
