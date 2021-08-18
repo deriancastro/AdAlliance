@@ -51,25 +51,25 @@ export default function Home({data1, data2, onDetail, toWellcome}) {
 }
 
 const WrapperHome = styled.div`
-display:grid;
-gap 30px;
+    display:grid;
+    gap 30px;
 `
 const WrapperPositions = styled.section`
-display: flex;
-align-items: center;
-justify-content: space-evenly;
-flex-wrap: wrap;
-gap: 50px;
-text-align: center;
-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    gap: 50px;
+    text-align: center;
+    height: 100vh;
 `
 const Button = styled.button`
-font-weight: 300;
-letter-spacing: 0.1rem;
-font-size: 1.5rem;
-border: none;
-padding: 12px;
-cursor: pointer;
-color: white;
-background: black;
+    font-weight: 300;
+    letter-spacing: 0.1rem;
+    font-size: 1.5rem;
+    border: none;
+    padding: 12px;
+    cursor: pointer;
+    color: white;
+    background: black;
 `

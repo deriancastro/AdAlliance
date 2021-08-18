@@ -29,12 +29,12 @@ const Text = styled.h2`
     color: red;
 `
 const Button = styled.button`
-font-weight: 300;
-letter-spacing: 0.1rem;
-font-size: 1.5rem;
-border: none;
-padding: 12px;
-cursor: pointer;
-color: white;
-background: black;
+    font-weight: 300;
+    letter-spacing: 0.1rem;
+    font-size: 1.5rem;
+    border: none;
+    padding: 12px;
+    cursor: pointer;
+    color: white;
+    background: black;
 `

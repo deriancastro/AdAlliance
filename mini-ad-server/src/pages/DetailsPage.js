@@ -24,21 +24,21 @@ export default function DetailsPage({currentAd, toHome}) {
 
 
 const WrapperDetail = styled.div`
-Display: grid;
-gap: 30px;
+    Display: grid;
+    gap: 30px;
 `
 
 const Button = styled.button`
-font-weight: 300;
-letter-spacing: 0.1rem;
-font-size: 1.5rem;
-border: none;
-padding: 12px;
-cursor: pointer;
-color: white;
-background: black;
+    font-weight: 300;
+    letter-spacing: 0.1rem;
+    font-size: 1.5rem;
+    border: none;
+    padding: 12px;
+    cursor: pointer;
+    color: white;
+    background: black;
 `
 const Detail = styled.iframe`
-margin: 0 auto;
-color: black;
+    margin: 0 auto;
+    color: black;
 `

@@ -11,7 +11,6 @@ import styled from 'styled-components';
 
 export default function App() {
   const def = defaultAd;
-  console.log(def);
   const [dataPosition1, setDataPosition1] = useLocalStorage('data1', def);
   const [dataPosition2, setDataPosition2] = useLocalStorage('data2', def);
   const [currentAdLink, setCurrentAdLink] = useState({});
@@ -45,11 +44,7 @@ export default function App() {
     })
     .catch(error => console.log(error)) 
   },[]);
-
-  console.log(dataPosition1);
-  console.log(dataPosition2);
-
-  
+ 
   return (
     <WrapperApp>
         <Switch>
