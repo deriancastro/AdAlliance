@@ -11,7 +11,7 @@ Position2.propTypes = {
 
 export default function  Position2({image, link, height, width, onDetail}) {
     return (
-        <Image src={image} alt="A advertisement" onClick={handleOnDetail} link={link}/>
+        <Image src={image} alt="" onClick={handleOnDetail} link={link} height={height} width={width} />
     )
 
     function handleOnDetail(){
@@ -20,8 +20,8 @@ export default function  Position2({image, link, height, width, onDetail}) {
 }
 
 const Image = styled.img`
-    height: 400px;
-    width: 400px;
+    height: ${props => props.height}px;
+    width: ${props => props.width}px;
     border: solid red 5px;
     border-radius: 10px;
 `

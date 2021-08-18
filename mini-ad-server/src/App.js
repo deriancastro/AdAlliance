@@ -1,37 +1,85 @@
-import './App.css';
-import { useEffect, useState } from 'react'
-import Position1 from './components/Position1';
-import Position2 from './components/Position2';
+import { Switch, Route, useHistory} from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import useLocalStorage from './lib/useLocalStorage';
+import Wellcome from './pages/Wellcome';
+import Home from './pages/Home';
+import defaultAd from './utils/defaultAd.json';
+import styled from 'styled-components';
 
-function App() {
-  const [dataPosition1, setdataPosition1] = useState([]);
-  const [dataPosition2, setdataPosition2] = useState([]);
-  const hour = 1;
+
+
+export default function App() {
+  const def = defaultAd;
+  console.log(def);
+  const [dataPosition1, setDataPosition1] = useLocalStorage('data1', def);
+  const [dataPosition2, setDataPosition2] = useLocalStorage('data2', def);
+  const [currentAdLink, setCurrentAdLink] = useState({});
+  const { push } = useHistory()
+  const hour = 10;
 
   useEffect(() => {
     fetch('/ads1/' + hour)
     .then(res => res.json())
-    .then(dataPosition1 => setdataPosition1(dataPosition1))
+    .then(dataPosition1 => {
+      if(!dataPosition1.length){
+          setDataPosition1(def)
+      }else{
+        setDataPosition1(dataPosition1)
+      }
+     })
     .catch(error => console.log(error))
-  }, []);
+  },[]);
 
   useEffect(() => {
-    fetch('/ads2' + hour)
+    fetch('/ads2/' + hour)
     .then(res => res.json())
-    .then(dataPosition2 => setdataPosition2(dataPosition2))
-    .catch(error => console.log(error))
-  }, []);
+    .then(dataPosition2 => {
+      if(!dataPosition2.length){
+        setDataPosition2(def)
+      }else{
+        setDataPosition2(dataPosition2)
+      }   
+    })
+    .catch(error => console.log(error)) 
+  },[]);
 
   console.log(dataPosition1);
   console.log(dataPosition2);
 
   
   return (
-    <div className="App">
-      <Position1 image={'https://box.adalliance.io/micha/gujtest/mr.png'} />
-      <Position2 image={'https://box.adalliance.io/micha/gujtest/mr.png'} />
-    </div>
+    <WrapperApp>
+        <Switch>
+          <Route exact path="/">
+            <Wellcome toAds={showHomePage}/>
+          </Route>
+          <Route path="/home">
+            <Home data1={dataPosition1} data2={dataPosition2} onDetail={showDetailPage} toWellcome={backToWellcome} />
+          </Route>
+          <Route path="/details">
+            
+          </Route>
+        </Switch> 
+    </WrapperApp>
   );
+
+  function showHomePage() {
+    push('/home');
+  }
+
+  function backToWellcome() {
+    push('/');
+  }
+   
+
+  function showDetailPage({currentLink}) {
+    setCurrentAdLink({currentLink});
+    push('/details');
+  }
 }
 
-export default App;
+const WrapperApp = styled.div`
+  height: 100vh;
+`
+
+
