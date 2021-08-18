@@ -16,6 +16,8 @@ export default function App() {
   const [dataPosition2, setDataPosition2] = useLocalStorage('data2', def);
   const [currentAdLink, setCurrentAdLink] = useState({});
   const { push } = useHistory()
+  
+  //man muss manuell ändern
   const hour = 0;
 
   useEffect(() => {
