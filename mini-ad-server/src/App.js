@@ -14,22 +14,9 @@ export default function App() {
   console.log(def);
   const [dataPosition1, setDataPosition1] = useLocalStorage('data1', def);
   const [dataPosition2, setDataPosition2] = useLocalStorage('data2', def);
-  const [hour,setHour] = useLocalStorage('hour', null)
   const [currentAdLink, setCurrentAdLink] = useState({});
   const { push } = useHistory()
- 
-
-  window.setInterval(() => {
-    let n = 0
-    do{
-      n++
-      setHour(n)
-      }
-      while(n < 24)
-  }, 10000)
-
-
-  console.log(hour); 
+  const hour = 4;
 
   useEffect(() => {
     fetch('/ads1/' + hour)
@@ -42,7 +29,7 @@ export default function App() {
       }
      })
     .catch(error => console.log(error))
-  },[hour]);
+  },[]);
 
   useEffect(() => {
     fetch('/ads2/' + hour)
@@ -55,7 +42,7 @@ export default function App() {
       }   
     })
     .catch(error => console.log(error)) 
-  },[hour]);
+  },[]);
 
   console.log(dataPosition1);
   console.log(dataPosition2);
