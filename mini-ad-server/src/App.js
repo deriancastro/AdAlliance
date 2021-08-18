@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import useLocalStorage from './lib/useLocalStorage';
 import Wellcome from './pages/Wellcome';
 import Home from './pages/Home';
+import DetailsPage from './pages/DetailsPage';
 import defaultAd from './utils/defaultAd.json';
 import styled from 'styled-components';
 
@@ -13,9 +14,22 @@ export default function App() {
   console.log(def);
   const [dataPosition1, setDataPosition1] = useLocalStorage('data1', def);
   const [dataPosition2, setDataPosition2] = useLocalStorage('data2', def);
+  const [hour,setHour] = useLocalStorage('hour', null)
   const [currentAdLink, setCurrentAdLink] = useState({});
   const { push } = useHistory()
-  const hour = 10;
+ 
+
+  window.setInterval(() => {
+    let n = 0
+    do{
+      n++
+      setHour(n)
+      }
+      while(n < 24)
+  }, 10000)
+
+
+  console.log(hour); 
 
   useEffect(() => {
     fetch('/ads1/' + hour)
@@ -28,7 +42,7 @@ export default function App() {
       }
      })
     .catch(error => console.log(error))
-  },[]);
+  },[hour]);
 
   useEffect(() => {
     fetch('/ads2/' + hour)
@@ -41,7 +55,7 @@ export default function App() {
       }   
     })
     .catch(error => console.log(error)) 
-  },[]);
+  },[hour]);
 
   console.log(dataPosition1);
   console.log(dataPosition2);
@@ -57,7 +71,7 @@ export default function App() {
             <Home data1={dataPosition1} data2={dataPosition2} onDetail={showDetailPage} toWellcome={backToWellcome} />
           </Route>
           <Route path="/details">
-            
+            <DetailsPage currentAd={currentAdLink} toHome={backToHome}/>
           </Route>
         </Switch> 
     </WrapperApp>
@@ -70,12 +84,16 @@ export default function App() {
   function backToWellcome() {
     push('/');
   }
-   
 
   function showDetailPage({currentLink}) {
     setCurrentAdLink({currentLink});
     push('/details');
   }
+
+  function backToHome() {
+    push('/home');
+  }
+   
 }
 
 const WrapperApp = styled.div`

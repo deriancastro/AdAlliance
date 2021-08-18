@@ -1,8 +1,13 @@
 [
     {
+        "advert_id": 1,
+        "priority": "1",
+        "position": 2,
+        "hour": 0,
         "image": "https://box.adalliance.io/micha/gujtest/mr.png", 
         "link": "https://www.ad-alliance.de", 
         "height": 250, 
-        "width": 300
+        "width": 300,
+        "views": 0
     }
 ]
