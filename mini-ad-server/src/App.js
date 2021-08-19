@@ -16,17 +16,19 @@ export default function App() {
   const [currentAdLink, setCurrentAdLink] = useState({});
   const { push } = useHistory()
   
-  //man muss manuell ändern
-  const hour = 9;
 
+
+  //man muss manuell ändern and the page reload
+  let hour = 1;
+  
   useEffect(() => {
     fetch('/ads1/' + hour)
     .then(res => res.json())
-    .then(dataPosition1 => {
-      if(!dataPosition1.length){
+    .then(dataPositionOne => {
+      if(!dataPositionOne.length){
           setDataPosition1(def)
       }else{
-        setDataPosition1(dataPosition1)
+        setDataPosition1(dataPositionOne)
       }
      })
     .catch(error => console.log(error))
@@ -35,11 +37,11 @@ export default function App() {
   useEffect(() => {
     fetch('/ads2/' + hour)
     .then(res => res.json())
-    .then(dataPosition2 => {
-      if(!dataPosition2.length){
+    .then(dataPositionTwo => {
+      if(!dataPositionTwo.length){
         setDataPosition2(def)
       }else{
-        setDataPosition2(dataPosition2)
+        setDataPosition2(dataPositionTwo)
       }   
     })
     .catch(error => console.log(error)) 
