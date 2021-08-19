@@ -17,7 +17,7 @@ export default function App() {
   const { push } = useHistory()
   
   //man muss manuell ändern
-  const hour = 0;
+  const hour = 9;
 
   useEffect(() => {
     fetch('/ads1/' + hour)
@@ -30,7 +30,7 @@ export default function App() {
       }
      })
     .catch(error => console.log(error))
-  },[]);
+  },[hour]);
 
   useEffect(() => {
     fetch('/ads2/' + hour)
@@ -43,7 +43,7 @@ export default function App() {
       }   
     })
     .catch(error => console.log(error)) 
-  },[]);
+  },[hour]);
  
   return (
     <WrapperApp>
