@@ -19,7 +19,7 @@ export default function App() {
 
 
   //man muss manuell ändern and the page reload
-  let hour = 1;
+  const hour = 23;
   
   useEffect(() => {
     fetch('/ads1/' + hour)
