@@ -7,19 +7,15 @@ import DetailsPage from './pages/DetailsPage';
 import defaultAd from './utils/defaultAd.json';
 import styled from 'styled-components';
 
-
-
 export default function App() {
   const def = defaultAd;
   const [dataPosition1, setDataPosition1] = useLocalStorage('data1', def);
   const [dataPosition2, setDataPosition2] = useLocalStorage('data2', def);
-  const [currentAdLink, setCurrentAdLink] = useState({});
+  const [currentAdLink, setCurrentAdLink] = useLocalStorage('currentLink',{});
   const { push } = useHistory()
   
-
-
   //man muss manuell ändern und die Seite reload
-  const hour = 5;
+  const hour = 8;
   
   useEffect(() => {
     fetch('/ads1/' + hour)
