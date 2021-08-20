@@ -4,7 +4,7 @@ import Position1 from '../components/Position1';
 import Position2 from '../components/Position2';
 
 Home.propTypes = {
-    data1: PropTypes.arrayOf(
+    data1: PropTypes.objectOf(
         PropTypes.shape({
             advert_id: PropTypes.number,
             height: PropTypes.number,
@@ -17,7 +17,7 @@ Home.propTypes = {
             width: PropTypes.number,
         })
     ),
-    data2: PropTypes.arrayOf(
+    data2: PropTypes.objectOf(
         PropTypes.shape({
             advert_id: PropTypes.number,
             height: PropTypes.number,
@@ -36,8 +36,8 @@ Home.propTypes = {
 
 export default function Home({data1, data2, onDetail, toWellcome}) {
 
-    const {image:image1, link:link1, height:height1, width:width1} = data1[0];
-    const {image:image2, link:link2, height:height2, width:width2} = data2[0];
+    const {image:image1, link:link1, height:height1, width:width1} = data1;
+    const {image:image2, link:link2, height:height2, width:width2} = data2;
 
     return (
         <WrapperHome>

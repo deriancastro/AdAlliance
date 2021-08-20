@@ -8,44 +8,59 @@ import defaultAd from './utils/defaultAd.json';
 import styled from 'styled-components';
 
 export default function App() {
-  const def = defaultAd;
-  const [dataPosition1, setDataPosition1] = useLocalStorage('data1', def);
-  const [dataPosition2, setDataPosition2] = useLocalStorage('data2', def);
+  const defPosition1a = defaultAd[0];
+  const defPosition1b = defaultAd[1];
+  const defPosition2a = defaultAd[2];
+  const defPosition2b = defaultAd[3];
+
+console.log(defPosition1a);
+console.log(defPosition1b);
+console.log(defPosition2a);
+console.log(defPosition2b);
+
+  const [dataPosition1, setDataPosition1] = useLocalStorage('data1', defPosition1a);
+  const [dataPosition2, setDataPosition2] = useLocalStorage('data2', defPosition2a);
   const [currentAdLink, setCurrentAdLink] = useLocalStorage('currentLink',{});
-  const [hour, setHour] = useState(0);
+  //const [hour, setHour] = useState(null);
   const { push } = useHistory()
  
- console.log(def);
- console.log(dataPosition1);
- console.log(dataPosition2);
-  
+  const currentHour = new Date().getHours();
+  console.log(currentHour);
+  //setHour(currentTime);
   
   useEffect(() => {
-    fetch('/ads1/' + hour)
+    fetch('/ads1/' + currentHour)
     .then(res => res.json())
     .then(dataPositionOne => {
       if(!dataPositionOne.length){
-          setDataPosition1(def) 
+          setDataPosition1(defPosition1a) 
       }else{
-        setDataPosition1(dataPositionOne)
+        setDataPosition1(dataPositionOne[0])
       }
      })
+    //.then(() => {window.location.reload()})
     .catch(error => console.log(error))
-  },[hour]);
+  },[]);
 
   useEffect(() => {
-    fetch('/ads2/' + hour)
+    fetch('/ads2/' + currentHour)
     .then(res => res.json())
     .then(dataPositionTwo => {
       if(!dataPositionTwo.length){
-        setDataPosition2(def) 
+        setDataPosition2(defPosition2a) 
       }else{
-        setDataPosition2(dataPositionTwo) 
+        setDataPosition2(dataPositionTwo[0]) 
       }
     })
+    //.then(() => {window.location.reload()})
     .catch(error => console.log(error)) 
-  },[hour]);
+  },[]);
+
  
+ console.log(dataPosition1);
+ console.log(dataPosition2);
+ //console.log(hour);
+
   return (
     <WrapperApp>
         <Switch>
@@ -53,7 +68,7 @@ export default function App() {
             <Wellcome toAds={toHomePage}/>
           </Route>
           <Route path="/home">
-            <Home data1={dataPosition1} data2={dataPosition2} onDetail={toDetailPage} toWellcome={toWellcome} />
+            <Home data1={dataPosition1} data2={dataPosition2} onDetail={toDetailsPage} toWellcome={toWellcome} />
           </Route>
           <Route path="/details">
             <DetailsPage currentAd={currentAdLink} toHome={toHomePage}/>
@@ -70,7 +85,7 @@ export default function App() {
     push('/');
   }
 
-  function toDetailPage({currentLink}) {
+  function toDetailsPage({currentLink}) {
     setCurrentAdLink({currentLink});
     push('/details');
   }
