@@ -14,7 +14,8 @@ export default function App() {
   const [currentAdLink, setCurrentAdLink] = useLocalStorage('currentLink',{});
   const [hour, setHour] = useState(0);
   const { push } = useHistory()
-  
+ 
+ console.log(def);
  console.log(dataPosition1);
  console.log(dataPosition2);
   
@@ -49,33 +50,29 @@ export default function App() {
     <WrapperApp>
         <Switch>
           <Route exact path="/">
-            <Wellcome toAds={showHomePage}/>
+            <Wellcome toAds={toHomePage}/>
           </Route>
           <Route path="/home">
-            <Home data1={dataPosition1} data2={dataPosition2} onDetail={showDetailPage} toWellcome={backToWellcome} />
+            <Home data1={dataPosition1} data2={dataPosition2} onDetail={toDetailPage} toWellcome={toWellcome} />
           </Route>
           <Route path="/details">
-            <DetailsPage currentAd={currentAdLink} toHome={backToHome}/>
+            <DetailsPage currentAd={currentAdLink} toHome={toHomePage}/>
           </Route>
         </Switch> 
     </WrapperApp>
   );
 
-  function showHomePage() {
+  function toHomePage() {
     push('/home');
   }
 
-  function backToWellcome() {
+  function toWellcome() {
     push('/');
   }
 
-  function showDetailPage({currentLink}) {
+  function toDetailPage({currentLink}) {
     setCurrentAdLink({currentLink});
     push('/details');
-  }
-
-  function backToHome() {
-    push('/home');
   }
    
 }
