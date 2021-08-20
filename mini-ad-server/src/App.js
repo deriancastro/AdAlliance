@@ -1,5 +1,5 @@
 import { Switch, Route, useHistory} from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useEffect, useState} from 'react';
 import useLocalStorage from './lib/useLocalStorage';
 import Wellcome from './pages/Wellcome';
 import Home from './pages/Home';
@@ -12,17 +12,19 @@ export default function App() {
   const [dataPosition1, setDataPosition1] = useLocalStorage('data1', def);
   const [dataPosition2, setDataPosition2] = useLocalStorage('data2', def);
   const [currentAdLink, setCurrentAdLink] = useLocalStorage('currentLink',{});
+  const [hour, setHour] = useState(0);
   const { push } = useHistory()
   
-  //man muss manuell ändern und die Seite reload
-  const hour = 8;
+ console.log(dataPosition1);
+ console.log(dataPosition2);
+  
   
   useEffect(() => {
     fetch('/ads1/' + hour)
     .then(res => res.json())
     .then(dataPositionOne => {
       if(!dataPositionOne.length){
-          setDataPosition1(def)
+          setDataPosition1(def) 
       }else{
         setDataPosition1(dataPositionOne)
       }
@@ -35,10 +37,10 @@ export default function App() {
     .then(res => res.json())
     .then(dataPositionTwo => {
       if(!dataPositionTwo.length){
-        setDataPosition2(def)
+        setDataPosition2(def) 
       }else{
-        setDataPosition2(dataPositionTwo)
-      }   
+        setDataPosition2(dataPositionTwo) 
+      }
     })
     .catch(error => console.log(error)) 
   },[hour]);
