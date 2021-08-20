@@ -13,11 +13,6 @@ export default function App() {
   const defPosition2a = defaultAd[2];
   const defPosition2b = defaultAd[3];
 
-console.log(defPosition1a);
-console.log(defPosition1b);
-console.log(defPosition2a);
-console.log(defPosition2b);
-
   const [dataPosition1, setDataPosition1] = useLocalStorage('data1', defPosition1a);
   const [dataPosition2, setDataPosition2] = useLocalStorage('data2', defPosition2a);
   const [currentAdLink, setCurrentAdLink] = useLocalStorage('currentLink',{});
@@ -26,36 +21,29 @@ console.log(defPosition2b);
  
   const currentHour = new Date().getHours();
   console.log(currentHour);
-  //setHour(currentTime);
+  //setHour(currentHour);
+
+  const header = {headers: {
+    hour:currentHour,
+    position1: 1,
+    position2: 2,
+  }}
   
   useEffect(() => {
-    fetch('/ads1/' + currentHour)
+    fetch('/ads' , header)
     .then(res => res.json())
     .then(dataPositionOne => {
       if(!dataPositionOne.length){
           setDataPosition1(defPosition1a) 
-      }else{
+      }else if(dataPositionOne.length === 1){
         setDataPosition1(dataPositionOne[0])
+      }else {
+         console.log('more than one result');
       }
      })
     //.then(() => {window.location.reload()})
     .catch(error => console.log(error))
   },[]);
-
-  useEffect(() => {
-    fetch('/ads2/' + currentHour)
-    .then(res => res.json())
-    .then(dataPositionTwo => {
-      if(!dataPositionTwo.length){
-        setDataPosition2(defPosition2a) 
-      }else{
-        setDataPosition2(dataPositionTwo[0]) 
-      }
-    })
-    //.then(() => {window.location.reload()})
-    .catch(error => console.log(error)) 
-  },[]);
-
  
  console.log(dataPosition1);
  console.log(dataPosition2);
