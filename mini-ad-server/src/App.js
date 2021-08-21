@@ -24,9 +24,7 @@ export default function App() {
   //setHour(currentHour);
 
   const header = {headers: {
-    hour:15,
-    position1: 1,
-    position2: 2,
+    hour: 15,
   }}
   
   useEffect(() => {
