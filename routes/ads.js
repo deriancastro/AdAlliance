@@ -1,6 +1,7 @@
 const express = require('express');
 const database = require('../config/database');
 const app = express();
+const defaultAd = require('../mini-ad-server/src/utils/defaultAd.json');
 
 app.get('/ads',  (req, res) => {
     const header = req.headers;
@@ -16,17 +17,19 @@ app.get('/ads',  (req, res) => {
         return results;
     }
 
+    function random(min, max) {
+        return Math.floor(Math.random() * (max - min + 1) + min);
+      }
+
     function filterResults(results){
         let length = results.length;
 
         switch(length) {
             case 2:
-                results = two(results)
-                
+                results = two(results);
                 break;
             case 1:
-                results = ['me organizo 1']
-                
+                results = one(results);
                 break;
             default:
                 results = ['me organizo 0']       
@@ -37,30 +40,115 @@ app.get('/ads',  (req, res) => {
         function two(array) {
             let position1 = array[0];
             let position2 = array[1];
-            let defaultAd = 'soy el random';
+            let defaultAdPosition1A = defaultAd[0];
+            let defaultAdPosition1B = defaultAd[1];
+            let defaultAdPosition2A = defaultAd[2];
+            let defaultAdPosition2B = defaultAd[3];
             let finalArray = [];
             
             if(position1.position === position2.position){
                 let index = position1.position - 1;
-                
 
                 if(position1.priority < position2.priority){
                     if(index === 0) {
                         finalArray.push(position1);
-                        finalArray.push(defaultAd);
+                        finalArray.push(defaultAdPosition2A);
                     }else {
-                        finalArray.push(defaultAd);
+                        finalArray.push(defaultAdPosition1A);
                         finalArray.push(position1);
                     }
                     
+                }else if(position1.priority > position2.priority) {
+                    if(index === 0) {
+                        finalArray.push(position2);
+                        finalArray.push(defaultAdPosition2B);
+                    }else {
+                        finalArray.push(defaultAdPosition1B);
+                        finalArray.push(position2);
+                    }
+
+                }else if(position1.priority === position2.priority) {
+                    if(position1.views < position2.views) {
+                        if(index === 0) {
+                            finalArray.push(position1);
+                            finalArray.push(defaultAdPosition2A);
+                        }else {
+                            finalArray.push(defaultAdPosition1A);
+                            finalArray.push(position1);
+                        }
+                    }else if(position1.views > position2.views) {
+                        if(index === 0) {
+                            finalArray.push(position2);
+                            finalArray.push(defaultAdPosition2B);
+                        }else {
+                            finalArray.push(defaultAdPosition1B);
+                            finalArray.push(position2);
+                        }
+                    }else if(position1.views === position2.views) {
+                        let randomPosition = random(1, 2);
+                        if(index === 0) {
+                            if(randomPosition === 1) {
+                                finalArray.push(position1);
+                                finalArray.push(defaultAdPosition2A);
+                            } else {
+                                finalArray.push(position2);
+                                finalArray.push(defaultAdPosition2B);
+                            }
+                        }else {
+                            if(randomPosition === 2) {
+                                finalArray.push(defaultAdPosition1A);
+                                finalArray.push(position1);
+                            } else {
+                                finalArray.push(defaultAdPosition1B);
+                                finalArray.push(position2);
+                            }
+                        }
+
+                    }
+                } 
+            }else {
+                if(position1.position < position2.position) {
+                    finalArray.push(position1);
+                    finalArray.push(position2);
+                }else {
+                    finalArray.push(position2);
+                    finalArray.push(position1);
                 }
-                //array = ['las posiciones son iguales caso 15, index: ' + index];
-
             }
-
             return finalArray;
-
         }
+
+        function one(array) {
+            let position1 = array[0];
+            let defaultAdPosition1A = defaultAd[0];
+            let defaultAdPosition1B = defaultAd[1];
+            let defaultAdPosition2A = defaultAd[2];
+            let defaultAdPosition2B = defaultAd[3];
+            let finalArray = [];
+
+            if(position1.position === 1) {
+                finalArray.push(position1);
+
+                let randomPosition = random(3, 4);
+                if(randomPosition === 3) {
+                    finalArray.push(defaultAdPosition2A);
+                } else {
+                    finalArray.push(defaultAdPosition2B);
+                }   
+            }else {
+                let randomPosition = random(1, 2);
+                if(randomPosition === 1) {
+                    finalArray.push(defaultAdPosition1A);
+                } else {
+                    finalArray.push(defaultAdPosition1B);
+                }
+                
+                finalArray.push(position1);
+            }
+            return finalArray;
+        }
+
+
 
         //console.log(results.length);
 
@@ -102,12 +190,10 @@ app.get('/ads',  (req, res) => {
                         
                         resultsTables = addResults(table1, resultsTables);
                         filteredresults = filterResults(resultsTables);
-                        console.log(resultsTables);
                         console.log(filteredresults);
 
                     } else {
                         filteredresults = filterResults(resultsTables);
-                        console.log(resultsTables);
                         console.log(filteredresults);
                     }
                 });
@@ -128,18 +214,16 @@ app.get('/ads',  (req, res) => {
                         
                         resultsTables = addResults(table1, resultsTables);
                         filteredresults = filterResults(resultsTables);
-                        console.log(resultsTables);
                         console.log(filteredresults);
                     } else {
                         resultsTables = [];
                         filteredresults = filterResults(resultsTables);
-                        console.log(resultsTables);
                         console.log(filteredresults);
                     }
                 });
             };
 
-            res.json(resultsTables);
+            res.json(filteredresults);
             
         })
         

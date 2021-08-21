@@ -9,9 +9,8 @@ import styled from 'styled-components';
 
 export default function App() {
   const defPosition1a = defaultAd[0];
-  const defPosition1b = defaultAd[1];
   const defPosition2a = defaultAd[2];
-  const defPosition2b = defaultAd[3];
+
 
   const [dataPosition1, setDataPosition1] = useLocalStorage('data1', defPosition1a);
   const [dataPosition2, setDataPosition2] = useLocalStorage('data2', defPosition2a);
@@ -24,7 +23,7 @@ export default function App() {
   //setHour(currentHour);
 
   const header = {headers: {
-    hour: 15,
+    hour: 23,
   }}
   
   useEffect(() => {
