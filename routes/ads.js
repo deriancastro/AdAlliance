@@ -26,18 +26,18 @@ app.get('/ads',  (req, res) => {
 
         switch(length) {
             case 2:
-                results = two(results);
+                results = twoPositions(results);
                 break;
             case 1:
-                results = one(results);
+                results = onePosition(results);
                 break;
             default:
-                results = ['me organizo 0']       
+                results = anyPosition();      
         }
 
         return results;
 
-        function two(array) {
+        function twoPositions(array) {
             let position1 = array[0];
             let position2 = array[1];
             let defaultAdPosition1A = defaultAd[0];
@@ -118,7 +118,7 @@ app.get('/ads',  (req, res) => {
             return finalArray;
         }
 
-        function one(array) {
+        function onePosition(array) {
             let position1 = array[0];
             let defaultAdPosition1A = defaultAd[0];
             let defaultAdPosition1B = defaultAd[1];
@@ -145,6 +145,30 @@ app.get('/ads',  (req, res) => {
                 
                 finalArray.push(position1);
             }
+            return finalArray;
+        }
+
+        function anyPosition() {
+            let defaultAdPosition1A = defaultAd[0];
+            let defaultAdPosition1B = defaultAd[1];
+            let defaultAdPosition2A = defaultAd[2];
+            let defaultAdPosition2B = defaultAd[3];
+            let finalArray = [];
+
+            let randomPosition1 = random(1, 2);
+                if(randomPosition1 === 1) {
+                    finalArray.push(defaultAdPosition1A);
+                } else {
+                    finalArray.push(defaultAdPosition1B);
+                }
+            
+            let randomPosition2 = random(3, 4);
+                if(randomPosition2 === 3) {
+                    finalArray.push(defaultAdPosition2A);
+                } else {
+                    finalArray.push(defaultAdPosition2B);
+                } 
+
             return finalArray;
         }
 
