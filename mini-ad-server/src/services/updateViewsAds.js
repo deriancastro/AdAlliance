@@ -4,5 +4,5 @@ export default function updateViewsAds(idAd1, tableAd1, idAd2, tableAd2) {
         headers: {
           'Content-Type': 'application/json', 
         }})
-        .then(res => console.log(res.ok))
+        .then(res => console.log(res.ok))      
 }

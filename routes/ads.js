@@ -53,9 +53,12 @@ app.get('/ads',  (req, res) => {
 
                 if(position1.priority < position2.priority){
                     if(index === 0) {
+                        position1.flag = 1;
                         finalArray.push(position1);
                         finalArray.push(defaultAdPosition2A);
                     }else {
+                        //für die Stunde 15, Prio: 1, advert_id: 7, position:2 und Tabelle 2
+                        position1.flag = 2;
                         finalArray.push(defaultAdPosition1A);
                         finalArray.push(position1);
                     }
@@ -254,7 +257,50 @@ app.get('/ads',  (req, res) => {
 
 app.post('/views/:idAd1/:tableAd1/:idAd2/:tableAd2', (req, res) => {
     const{idAd1, tableAd1, idAd2, tableAd2} = req.params;
-    console.log('idAd1: ' + idAd1 + ' idAd2: ' + idAd2 + ' tableAd1: ' + tableAd1 + ' tableAd2: ' + tableAd2);
+    //console.log('idAd1: ' + idAd1 + ' idAd2: ' + idAd2 + ' tableAd1: ' + tableAd1 + ' tableAd2: ' + tableAd2);
+    handleUpdateViews(idAd1, tableAd1, idAd2, tableAd2);
+
+    function handleUpdateViews(idAd1, tableAd1, idAd2, tableAd2) {
+        console.log('idAd1: ' + idAd1 + ' idAd2: ' + idAd2 + ' tableAd1: ' + tableAd1 + ' tableAd2: ' + tableAd2);
+
+        let sqlUpdateTable1 = `UPDATE table${tableAd1} SET views = views + 1 WHERE advert_id = ${idAd1}`;
+        let sqlUpdateTable2 = `UPDATE table${tableAd2} SET views = views + 1 WHERE advert_id = ${idAd2}`;
+
+        if(tableAd1 || tableAd2) {
+            if(tableAd1 === 1 || tableAd1 === 2) {
+                database.query (sqlUpdateTable1, (err, res) => {
+                    if (err) {
+                        res.status(400).json({
+                            message: err
+                        });
+                        return;
+                    }
+
+                        res.status(200).json({
+                        status: 200,
+                        success: true
+                    });
+                });
+            } else if(tableAd2 === 1 || tableAd2 === 2){
+                database.query (sqlUpdateTable2, (err, res) => {
+                    if (err) {
+                        res.status(400).json({
+                            message: err
+                        });
+                        return;
+                    }
+
+                        res.status(200).json({
+                        status: 200,
+                        success: true
+                    });
+                });
+            }
+
+        }else {
+            console.log('no flags');
+        }
+    }
 });
 
 module.exports = app;
