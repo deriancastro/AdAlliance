@@ -1,14 +1,16 @@
 const express = require('express');
 const database = require('../config/database');
 const app = express();
-const defaultAd = require('../mini-ad-server/src/utils/defaultAd.json');
+const defaultAd = require('../utils/defaultAd.json');
+
 
 app.get('/ads',  (req, res) => {
     const header = req.headers;
     handleRequest(header.hour);
 
-    function setValue(value, table){
+    function setValue(value, table, flag){
         table = value;
+        table[0].flag = flag; 
         return table;
     };
 
@@ -171,11 +173,6 @@ app.get('/ads',  (req, res) => {
 
             return finalArray;
         }
-
-
-
-        //console.log(results.length);
-
     }
 
     function handleRequest (hour){
@@ -195,7 +192,7 @@ app.get('/ads',  (req, res) => {
 
             if (result2.length) {
                 let table2;
-                table2 = await setValue(result2, table2);
+                table2 = await setValue(result2, table2, 2);
     
                 resultsTables = addResults(table2, resultsTables);
                 
@@ -210,15 +207,17 @@ app.get('/ads',  (req, res) => {
 
                     if (result1.length) {
                         let table1;
-                        table1 = await setValue(result1, table1);
+                        table1 = await setValue(result1, table1, 1);
                         
                         resultsTables = addResults(table1, resultsTables);
                         filteredresults = filterResults(resultsTables);
                         console.log(filteredresults);
+                        res.json(filteredresults);
 
                     } else {
                         filteredresults = filterResults(resultsTables);
                         console.log(filteredresults);
+                        res.json(filteredresults);
                     }
                 });
 
@@ -234,29 +233,28 @@ app.get('/ads',  (req, res) => {
 
                     if (result1.length) {
                         let table1;
-                        table1 = await setValue(result1, table1);
+                        table1 = await setValue(result1, table1, 1);
                         
                         resultsTables = addResults(table1, resultsTables);
                         filteredresults = filterResults(resultsTables);
                         console.log(filteredresults);
+                        res.json(filteredresults);
                     } else {
                         resultsTables = [];
                         filteredresults = filterResults(resultsTables);
                         console.log(filteredresults);
+                        res.json(filteredresults);
                     }
                 });
             };
+                      
+        })  
+    };    
+});
 
-            res.json(filteredresults);
-            
-        })
-        
-        
-       
-       
-    };
- 
-    
+app.post('/views/:idAd1/:tableAd1/:idAd2/:tableAd2', (req, res) => {
+    const{idAd1, tableAd1, idAd2, tableAd2} = req.params;
+    console.log('idAd1: ' + idAd1 + ' idAd2: ' + idAd2 + ' tableAd1: ' + tableAd1 + ' tableAd2: ' + tableAd2);
 });
 
 module.exports = app;
