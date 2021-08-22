@@ -11,8 +11,7 @@ import updateViewsAds from './services/updateViewsAds';
 
 export default function App() {
   const defaultAds = defaultAd;
-  const currentHour = 1;
-  //new Date().getHours();
+  const currentHour = new Date().getHours();
   const [ads, setAds] = useLocalStorage('ads', defaultAds);
   const [currentAdLink, setCurrentAdLink] = useLocalStorage('currentLink',{});
   const idAd1 = ads[0].advert_id;
@@ -20,17 +19,13 @@ export default function App() {
   const idAd2 = ads[1].advert_id;
   const tableAd2 = ads[1].flag;
   const { push } = useHistory()
- 
-  console.log(currentHour);
-  console.log(ads);
-  console.log(idAd1, tableAd1, idAd2, tableAd2);
 
   useEffect(() => {
     getAds(currentHour)
     .then(ads => {setAds(ads)})
     .catch(error => console.log(error))
 
-    updateViewsAds(idAd1, tableAd1, idAd2, tableAd2, ads[0])
+    updateViewsAds(idAd1, tableAd1, idAd2, tableAd2)
     .then(res => console.log(res))
     .catch(error => console.log(error))
 
