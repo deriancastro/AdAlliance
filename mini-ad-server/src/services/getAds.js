@@ -1,5 +1,5 @@
 export default function getAds(currentHour) {
-    return fetch('/ads' , {
+    return fetch('/api/ads' , {
         method: 'GET',
         headers: {
         hour: currentHour,

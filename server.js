@@ -15,9 +15,7 @@ app.use(express.urlencoded({
     extended: true
 }));
 
-app.use('/', [
-    require('./routes/ads'),
-]);
+app.use('/api/ads', require('./routes/ads'));
 
 app.listen(port, () => {
     console.log(`listening at http://localhost:${port}`)

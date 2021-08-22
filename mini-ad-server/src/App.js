@@ -11,7 +11,7 @@ import updateViewsAds from './services/updateViewsAds';
 
 export default function App() {
   const defaultAds = defaultAd;
-  const currentHour = 20;
+  const currentHour = 1;
   //new Date().getHours();
   const [ads, setAds] = useLocalStorage('ads', defaultAds);
   const [currentAdLink, setCurrentAdLink] = useLocalStorage('currentLink',{});
@@ -30,7 +30,8 @@ export default function App() {
     .then(ads => {setAds(ads)})
     .catch(error => console.log(error))
 
-    updateViewsAds(idAd1, tableAd1, idAd2, tableAd2)
+    updateViewsAds(idAd1, tableAd1, idAd2, tableAd2, ads[0])
+    .then(res => console.log(res))
     .catch(error => console.log(error))
 
   },[currentHour]);
