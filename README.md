@@ -6,7 +6,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 In the project directory, you can run:
 
-# `npm start`
+## `npm start`
 
 ### `\adAdlliance`
 To run the server on port 4000, you need e.g. XAMPP app (for MySQL connection)
