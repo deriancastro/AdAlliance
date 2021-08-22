@@ -4,14 +4,15 @@ import useLocalStorage from './lib/useLocalStorage';
 import Wellcome from './pages/Wellcome';
 import Home from './pages/Home';
 import DetailsPage from './pages/DetailsPage';
-import defaultAd from './lib/defaultAdsFrontend.json';
+import defaultAd from './lib/defaultAdsFrontend.json';//Falls es keine Verbindung zur Datenbank gibt 
 import styled from 'styled-components';
 import getAds from './services/getAds';
 import updateViewsAds from './services/updateViewsAds';
 
 export default function App() {
   const defaultAds = defaultAd;
-  const currentHour = new Date().getHours();
+  const currentHour = 4;
+  //new Date().getHours();
   const [ads, setAds] = useLocalStorage('ads', defaultAds);
   const [currentAdLink, setCurrentAdLink] = useLocalStorage('currentLink',{});
   const idAd1 = ads[0].advert_id;
@@ -26,10 +27,13 @@ export default function App() {
     .catch(error => console.log(error))
 
     updateViewsAds(idAd1, tableAd1, idAd2, tableAd2)
-    .then(res => console.log(res))
     .catch(error => console.log(error))
 
   },[currentHour]);
+
+  //um die Ergebnisse nach Zeiten, Positionen und Prioritäten zu überprüfen 
+  //wenn nur eine Anzeige vorhanden ist, wurde eine weitere Anzeige zufällig aus utils/defaultAd.json hinzugefügt
+  console.log(ads);
  
   return (
     <WrapperApp>

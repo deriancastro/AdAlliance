@@ -8,7 +8,8 @@
         "link": "https://www.ad-alliance.de", 
         "height": 250, 
         "width": 300,
-        "views": 0
+        "views": 0,
+        "flag": 2
     },
     {
         "advert_id": 12,
@@ -19,7 +20,9 @@
         "link": "https://www.ad-alliance.de", 
         "height": 90, 
         "width": 728,
-        "views": 0
+        "views": 0,
+        "flag": 2
+
     },
     {
         "advert_id": 7,
@@ -30,7 +33,8 @@
         "link": "https://www.ad-alliance.de", 
         "height": 90, 
         "width": 728,
-        "views": 0
+        "views": 0,
+        "flag": 2
     },
     {
         "advert_id": 8,
@@ -41,6 +45,7 @@
         "link": "https://www.ad-alliance.de", 
         "height": 600, 
         "width": 300,
-        "views": 0
+        "views": 0,
+        "flag": 2
     }
 ]

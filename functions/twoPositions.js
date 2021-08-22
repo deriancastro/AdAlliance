@@ -15,12 +15,9 @@ function twoPositions(array) {
 
         if(position1.priority < position2.priority){
             if(index === 0) {
-                position1.flag = 1;
                 finalArray.push(position1);
                 finalArray.push(defaultAdPosition2A);
             }else {
-                //für die Stunde 15, Prio: 1, advert_id: 7, position:2 und Tabelle 2
-                position1.flag = 2;
                 finalArray.push(defaultAdPosition1A);
                 finalArray.push(position1);
             }

@@ -14,7 +14,7 @@ function handleRequest (hour, res){
         
         if (err) {
             res.status(400).json({
-                message: err
+            message: err
             });
             return;
         }
@@ -29,7 +29,7 @@ function handleRequest (hour, res){
 
                 if (err) {
                     res.status(400).json({
-                        message: err
+                    message: err
                     });
                     return;
                 }
@@ -55,7 +55,7 @@ function handleRequest (hour, res){
 
                 if (err) {
                     res.status(400).json({
-                        message: err
+                    message: err
                     });
                     return;
                 }

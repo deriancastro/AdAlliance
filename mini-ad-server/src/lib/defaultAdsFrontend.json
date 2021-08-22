@@ -8,7 +8,8 @@
         "link": "https://www.ad-alliance.de", 
         "height": 250, 
         "width": 300,
-        "views": 0
+        "views": 0,
+        "flag": 2
     },
     {
         "advert_id": 8,
@@ -19,6 +20,7 @@
         "link": "https://www.ad-alliance.de", 
         "height": 600, 
         "width": 300,
-        "views": 0
+        "views": 0,
+        "flag": 2
     }
 ]
