@@ -1,4 +1,4 @@
-import PropTypes from 'prop-types'
+import PropTypes from 'prop-types';
 import styled from 'styled-components/macro';
 
 Position2.propTypes = {
@@ -15,7 +15,7 @@ export default function  Position2({image, link, height, width, onDetail}) {
     )
 
     function handleOnDetail(){
-        onDetail({currentLink: link})
+        onDetail({currentLink: link});
     }
 }
 

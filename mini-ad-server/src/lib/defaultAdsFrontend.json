@@ -1,0 +1,28 @@
+[
+    {
+        "advert_id": 3,
+        "priority": "1",
+        "position": 1,
+        "hour": 3,
+        "image": "https://box.adalliance.io/micha/gujtest/mr.png", 
+        "link": "https://www.ad-alliance.de", 
+        "height": 250, 
+        "width": 300,
+        "views": 0,
+        "fromDB": false,
+        "flag": 2
+    },
+    {
+        "advert_id": 8,
+        "priority": "1",
+        "position": 2,
+        "hour": 16,
+        "image": "https://box.adalliance.io/micha/gujtest/hp.png", 
+        "link": "https://www.ad-alliance.de", 
+        "height": 600, 
+        "width": 300,
+        "views": 0,
+        "fromDB": false,
+        "flag": 2
+    }
+]

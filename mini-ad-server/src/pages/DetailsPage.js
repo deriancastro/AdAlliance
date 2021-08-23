@@ -39,6 +39,5 @@ const Button = styled.button`
     background: black;
 `
 const Detail = styled.iframe`
-    margin: 0 auto;
-    color: black;
+    margin: 0 auto;  
 `

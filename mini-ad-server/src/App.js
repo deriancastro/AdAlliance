@@ -1,83 +1,69 @@
 import { Switch, Route, useHistory} from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useEffect} from 'react';
 import useLocalStorage from './lib/useLocalStorage';
 import Wellcome from './pages/Wellcome';
 import Home from './pages/Home';
 import DetailsPage from './pages/DetailsPage';
-import defaultAd from './utils/defaultAd.json';
+import defaultAd from './lib/defaultAdsFrontend.json';//Falls es keine Verbindung(Fehler) zur Datenbank besteht 
 import styled from 'styled-components';
-
-
+import getAds from './services/getAds';
+import updateViewsAds from './services/updateViewsAds';
 
 export default function App() {
-  const def = defaultAd;
-  const [dataPosition1, setDataPosition1] = useLocalStorage('data1', def);
-  const [dataPosition2, setDataPosition2] = useLocalStorage('data2', def);
-  const [currentAdLink, setCurrentAdLink] = useState({});
+  const defaultAds = defaultAd;
+  const currentHour = new Date().getHours();
+  //Um direkt zu testen, muss die Uhrzeit geändert und der Browser aktualisiert werden
+  //const currentHour = 1; 
+  const [ads, setAds] = useLocalStorage('ads', defaultAds);
+  const [currentAdLink, setCurrentAdLink] = useLocalStorage('currentLink',{});
+  const idAd1 = ads[0].advert_id;
+  const tableAd1 = ads[0].flag;
+  const idAd2 = ads[1].advert_id;
+  const tableAd2 = ads[1].flag;
   const { push } = useHistory()
-  
-
-
-  //man muss manuell ändern und die Seite reload
-  const hour = 5;
-  
-  useEffect(() => {
-    fetch('/ads1/' + hour)
-    .then(res => res.json())
-    .then(dataPositionOne => {
-      if(!dataPositionOne.length){
-          setDataPosition1(def)
-      }else{
-        setDataPosition1(dataPositionOne)
-      }
-     })
-    .catch(error => console.log(error))
-  },[hour]);
 
   useEffect(() => {
-    fetch('/ads2/' + hour)
-    .then(res => res.json())
-    .then(dataPositionTwo => {
-      if(!dataPositionTwo.length){
-        setDataPosition2(def)
-      }else{
-        setDataPosition2(dataPositionTwo)
-      }   
+    getAds(currentHour)
+    .then(ads => {
+      setAds(ads)
+      updateViewsAds(idAd1, tableAd1, idAd2, tableAd2)
     })
-    .catch(error => console.log(error)) 
-  },[hour]);
+    .catch(error => console.log(error))
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[currentHour]);
+
+  //Um die Ergebnisse nach Zeiten, Positionen und Prioritäten zu überprüfen 
+  //wenn nur eine/keine Anzeige vorhanden ist, wurde eine/beide weitere Anzeige(n) zufällig aus utils/defaultAd.json hinzugefügt
+  //Die Entität kommt nicht aus der Datenbank, aber ihre Views werden aktualisiert
+  console.log(ads);
  
   return (
     <WrapperApp>
         <Switch>
           <Route exact path="/">
-            <Wellcome toAds={showHomePage}/>
+            <Wellcome toAds={toHomePage}/>
           </Route>
           <Route path="/home">
-            <Home data1={dataPosition1} data2={dataPosition2} onDetail={showDetailPage} toWellcome={backToWellcome} />
+            <Home data={ads} onDetail={toDetailsPage} toWellcome={toWellcome} />
           </Route>
           <Route path="/details">
-            <DetailsPage currentAd={currentAdLink} toHome={backToHome}/>
+            <DetailsPage currentAd={currentAdLink} toHome={toHomePage}/>
           </Route>
         </Switch> 
     </WrapperApp>
   );
 
-  function showHomePage() {
+  function toHomePage() {
     push('/home');
   }
 
-  function backToWellcome() {
+  function toWellcome() {
     push('/');
   }
 
-  function showDetailPage({currentLink}) {
+  function toDetailsPage({currentLink}) {
     setCurrentAdLink({currentLink});
     push('/details');
-  }
-
-  function backToHome() {
-    push('/home');
   }
    
 }

@@ -1,45 +1,16 @@
 const express = require('express');
-const database = require('../config/database');
 const app = express();
+const handleRequest = require('../functions/handleRequest');
+const handleUpdateViews = require('../functions/handleUpdateViews');
 
-app.get('/ads1/:hour', (req, res) => {
-    const{hour} = req.params;
-    let sql = `SELECT * FROM table1 WHERE hour = ${hour}`;
-
-    database.query(sql, (err, result) => {
-        if(err) {
-            res.status(400).json({
-                message: err
-            });
-            return;
-        }
-
-        if(result.length) {
-            res.json(result);
-        }else {
-            res.json({});
-        };
-    });
+app.get('/',  (req, res) => {
+    const header = req.headers;
+    handleRequest(header.hour, res);      
 });
-
-app.get('/ads2/:hour', (req, res) => {
-    const{hour} = req.params;
-    let sql = `SELECT * FROM table2 WHERE hour = ${hour}`;
-
-    database.query(sql, (err, result) => {
-        if(err) {
-            res.status(400).json({
-                message: err
-            });
-            return;
-        }
-
-        if(result.length) {
-            res.json(result);
-        }else {
-            res.json({});
-        };
-    });
+ 
+app.patch('/', (req, res) => {
+    const header = req.headers;
+    handleUpdateViews(header.idad1, header.tablead1, header.idad2, header.tablead2, res);
 });
 
 module.exports = app;
