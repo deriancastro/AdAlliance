@@ -5,8 +5,8 @@ const database = require('../config/database');
 
 
 function handleRequest (hour, res){
-    let sqlTable1 = `SELECT * FROM table1 WHERE hour = ${hour}`
-    let sqlTable2 = `SELECT * FROM table2 WHERE hour = ${hour}`
+    let sqlTable1 = `SELECT * FROM table1 WHERE hour = ${hour}`;
+    let sqlTable2 = `SELECT * FROM table2 WHERE hour = ${hour}`;
     
     database.query (sqlTable2, async (err, result2) => {
         let resultsTables = [];
@@ -17,7 +17,7 @@ function handleRequest (hour, res){
             message: err
             });
             return;
-        }
+        };
 
         if (result2.length) {
             let table2;
@@ -32,7 +32,7 @@ function handleRequest (hour, res){
                     message: err
                     });
                     return;
-                }
+                };
 
                 if (result1.length) {
                     let table1;
@@ -40,14 +40,14 @@ function handleRequest (hour, res){
                     
                     resultsTables = addResults(table1, resultsTables);
                     filteredresults = filterResults(resultsTables);
-                    console.log(filteredresults);
+                    console.log(filteredresults);//Terminal nodemon(node server.js)
                     res.json(filteredresults);
 
                 } else {
                     filteredresults = filterResults(resultsTables);
-                    console.log(filteredresults);
+                    console.log(filteredresults);//Terminal nodemon(node server.js)
                     res.json(filteredresults);
-                }
+                };
             });
 
         } else {
@@ -58,7 +58,7 @@ function handleRequest (hour, res){
                     message: err
                     });
                     return;
-                }
+                };
 
                 if (result1.length) {
                     let table1;
@@ -66,18 +66,18 @@ function handleRequest (hour, res){
                     
                     resultsTables = addResults(table1, resultsTables);
                     filteredresults = filterResults(resultsTables);
-                    console.log(filteredresults);
+                    console.log(filteredresults);//Terminal nodemon(node server.js)
                     res.json(filteredresults);
                 } else {
                     resultsTables = [];
                     filteredresults = filterResults(resultsTables);
-                    console.log(filteredresults);
+                    console.log(filteredresults);//Terminal nodemon(node server.js)
                     res.json(filteredresults);
-                }
+                };
             });
         };
                   
-    })  
+    });  
 }; 
 
 module.exports = handleRequest;

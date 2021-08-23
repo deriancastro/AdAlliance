@@ -17,38 +17,38 @@ function twoPositions(array) {
             if(index === 0) {
                 finalArray.push(position1);
                 finalArray.push(defaultAdPosition2A);
-            }else {
+            } else {
                 finalArray.push(defaultAdPosition1A);
                 finalArray.push(position1);
-            }
+            };
             
-        }else if(position1.priority > position2.priority) {
+        } else if(position1.priority > position2.priority) {
             if(index === 0) {
                 finalArray.push(position2);
                 finalArray.push(defaultAdPosition2B);
-            }else {
+            } else {
                 finalArray.push(defaultAdPosition1B);
                 finalArray.push(position2);
-            }
+            };
 
-        }else if(position1.priority === position2.priority) {
+        } else if(position1.priority === position2.priority) {
             if(position1.views < position2.views) {
                 if(index === 0) {
                     finalArray.push(position1);
                     finalArray.push(defaultAdPosition2A);
-                }else {
+                } else {
                     finalArray.push(defaultAdPosition1A);
                     finalArray.push(position1);
-                }
-            }else if(position1.views > position2.views) {
+                };
+            } else if(position1.views > position2.views) {
                 if(index === 0) {
                     finalArray.push(position2);
                     finalArray.push(defaultAdPosition2B);
-                }else {
+                } else {
                     finalArray.push(defaultAdPosition1B);
                     finalArray.push(position2);
-                }
-            }else if(position1.views === position2.views) {
+                };
+            } else if(position1.views === position2.views) {
                 let randomPosition = random(1, 2);
                 if(index === 0) {
                     if(randomPosition === 1) {
@@ -57,30 +57,29 @@ function twoPositions(array) {
                     } else {
                         finalArray.push(position2);
                         finalArray.push(defaultAdPosition2B);
-                    }
-                }else {
+                    };
+                } else {
                     if(randomPosition === 2) {
                         finalArray.push(defaultAdPosition1A);
                         finalArray.push(position1);
                     } else {
                         finalArray.push(defaultAdPosition1B);
                         finalArray.push(position2);
-                    }
-                }
-
-            }
-        } 
-    }else {
+                    };
+                };
+            };
+        }; 
+    } else {
         if(position1.position < position2.position) {
             finalArray.push(position1);
             finalArray.push(position2);
-        }else {
+        } else {
             finalArray.push(position2);
             finalArray.push(position1);
-        }
-    }
+        };
+    };
     return finalArray;
-}
+};
 
 module.exports = twoPositions;
 

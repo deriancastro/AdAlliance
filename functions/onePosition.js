@@ -17,17 +17,17 @@ function onePosition(array) {
             finalArray.push(defaultAdPosition2A);
         } else {
             finalArray.push(defaultAdPosition2B);
-        }   
+        };  
     }else {
         let randomPosition = random(1, 2);
         if(randomPosition === 1) {
             finalArray.push(defaultAdPosition1A);
         } else {
             finalArray.push(defaultAdPosition1B);
-        }
+        };
         
         finalArray.push(position1);
-    }
+    };
     return finalArray;
 }
 

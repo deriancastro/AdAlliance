@@ -9,6 +9,7 @@
         "height": 250, 
         "width": 300,
         "views": 0,
+        "fromDB": false,
         "flag": 2
     },
     {
@@ -21,6 +22,7 @@
         "height": 600, 
         "width": 300,
         "views": 0,
+        "fromDB": false,
         "flag": 2
     }
 ]

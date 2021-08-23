@@ -4,15 +4,16 @@ import useLocalStorage from './lib/useLocalStorage';
 import Wellcome from './pages/Wellcome';
 import Home from './pages/Home';
 import DetailsPage from './pages/DetailsPage';
-import defaultAd from './lib/defaultAdsFrontend.json';//Falls es keine Verbindung zur Datenbank gibt 
+import defaultAd from './lib/defaultAdsFrontend.json';//Falls es keine Verbindung(Fehler) zur Datenbank besteht 
 import styled from 'styled-components';
 import getAds from './services/getAds';
 import updateViewsAds from './services/updateViewsAds';
 
 export default function App() {
   const defaultAds = defaultAd;
-  const currentHour = 4;
-  //new Date().getHours();
+  const currentHour = new Date().getHours();
+  //Um direkt zu testen, muss die Uhrzeit geändert und der Browser aktualisiert werden
+  //const currentHour = 1; 
   const [ads, setAds] = useLocalStorage('ads', defaultAds);
   const [currentAdLink, setCurrentAdLink] = useLocalStorage('currentLink',{});
   const idAd1 = ads[0].advert_id;
@@ -23,16 +24,17 @@ export default function App() {
 
   useEffect(() => {
     getAds(currentHour)
-    .then(ads => {setAds(ads)})
+    .then(ads => {
+      setAds(ads)
+      updateViewsAds(idAd1, tableAd1, idAd2, tableAd2)
+    })
     .catch(error => console.log(error))
-
-    updateViewsAds(idAd1, tableAd1, idAd2, tableAd2)
-    .catch(error => console.log(error))
-
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   },[currentHour]);
 
-  //um die Ergebnisse nach Zeiten, Positionen und Prioritäten zu überprüfen 
-  //wenn nur eine Anzeige vorhanden ist, wurde eine weitere Anzeige zufällig aus utils/defaultAd.json hinzugefügt
+  //Um die Ergebnisse nach Zeiten, Positionen und Prioritäten zu überprüfen 
+  //wenn nur eine/keine Anzeige vorhanden ist, wurde eine/beide weitere Anzeige(n) zufällig aus utils/defaultAd.json hinzugefügt
+  //Die Entität kommt nicht aus der Datenbank, aber ihre Views werden aktualisiert
   console.log(ads);
  
   return (
