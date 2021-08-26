@@ -62,7 +62,7 @@ export default function App() {
   }
 
   function toDetailsPage({currentLink}) {
-    setCurrentAdLink({currentLink});
+      setCurrentAdLink({ currentLink });
     push('/details');
   }
    
