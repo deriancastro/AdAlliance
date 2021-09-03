@@ -4,11 +4,13 @@
   "description": "",
   "main": "server.js",
   "dependencies": {
+    "eslint-config-airbnb": "^18.2.1",
     "express": "^4.17.1",
     "mysql": "^2.18.1"
   },
   "devDependencies": {
-    "nodemon": "^2.0.12"
+    "nodemon": "^2.0.12",
+    "prettier": "2.3.2"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
